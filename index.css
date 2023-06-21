@@ -5,7 +5,7 @@
     --clr-white: 0 0% 100%;
 
     /* font-sizes */
-    --fs-900: 9.375rem;
+    --fs-900: clamp(5rem, 8vw + 1 rem, 9.375rem);
     --fs-800: 6.25rem;
     --fs-700: 3.5rem;
     --fs-600: 2rem;
@@ -20,6 +20,27 @@
     --ff-sans-normal: "Barlow", sans-serif;
 }
 
+/* tablet size */
+@media (min-width: 35em) {
+    :root {
+        --fs-900: 9.375rem;
+        --fs-800: 5rem;
+        --fs-700: 2.5rem;
+        --fs-600: 1.5rem;
+        --fs-400: 1rem;
+    }
+}
+
+/* phone size */
+@media (min-width: 45em) {
+    :root {
+        /* font-sizes */
+        --fs-800: 6.25rem;
+        --fs-700: 3.5rem;
+        --fs-600: 2rem;
+        --fs-400: 1.125rem;
+    }
+}
 
 /* reset -----------------------------*/
 
@@ -64,6 +85,9 @@ body {
     background-color: hsl( var(--clr-dark) );
     line-height: 1.5;
     min-height: 100vh;
+
+    display: grid;
+    grid-template-rows: min-content 1fr;
 }
 
 /* make images easier to work with */
@@ -107,6 +131,9 @@ select {
     display: grid;
     gap: var(--gap, 1rem);
 }
+.d-block {
+    display: block;
+}
 
 .flow > *:where(:not(:first-child)) {
     margin-top: var(--flow-space, 1rem);
@@ -117,6 +144,39 @@ select {
     margin-inline: auto;
     max-width: 80rem;
 }
+
+.grid-container {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    padding-inline: 1rem;
+}
+
+/* ch = characters */
+.grid-container * {
+    max-width: 50ch;
+}
+
+@media (min-width: 45em) {
+    .grid-container {
+        text-align: left;
+        column-gap: var(--container-gap, 2rem);
+        grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 40rem)) minmax(2rem, 1fr);
+    }
+    .grid-container > *:first-child {
+        grid-column: 2;
+    }
+    
+    .grid-container > *:last-child {
+        grid-column: 3;
+    }
+
+    .grid-container--home {
+        padding-bottom: max(6rem, 20vh);
+        align-items: end;
+    }
+}
+
 
 /* screen reader only*/
 /* visually hide content for sighted users but keep content in page so it gives extra context to user using assistive tech*/
@@ -190,9 +250,10 @@ select {
 /* components */
 
 .large-button {
+    font-size: 2rem;
     position: relative;
     z-index: 1;
-    display: grid;
+    display: inline-grid;
     place-items: center;
     padding: 0 2em;
     border-radius: 50%;
@@ -290,4 +351,33 @@ select {
 
 .number-indicators > [aria-selected="true"] {
     background-color: hsl( var(--clr-white) / 1); 
+}
+
+/* not complete */
+
+/* -------------------------- */
+/* Page specific backgrounds  */
+/* -------------------------- */
+
+body {
+    background-size: cover;
+    background-position: bottom center;
+}
+
+/* home */
+.home {
+    background-image: url(./assets/home/background-home-mobile.jpg);
+}
+
+@media (min-width: 35rem) {
+    .home {
+        background-position: center center;
+        background-image: url(./assets/home/background-home-tablet.jpg);
+    }
+}
+
+@media (min-width: 45rem) {
+    .home {
+        background-image: url(./assets/home/background-home-desktop.jpg);
+    }
 }
